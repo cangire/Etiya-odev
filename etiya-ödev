@@ -1,0 +1,68 @@
+--between,in,group by ,update ,delete ,set,having,insert into,inner join
+
+
+--product tablosuna ürün eklemek
+INSERT INTO products(name,stock,unit_price)
+VALUES('masa',5,200)
+
+--isme göre masa isimli ürün stok durumunu update edildi
+UPDATE products
+SET stock=30
+WHERE products."name"='masa'
+
+--id si 6 olan ürün DELETE edildi
+DELETE from products 
+Where id=6
+
+
+-- 0 ile 150 arasındaki stok miktarına sahip ürünleri getirmek için between kullanıldı
+SELECT *
+FROM products
+ Where stock Between 0 and 150
+
+--IN ile name alanı water ve shoes olan ürünler getirildi.
+select * from products 
+where name IN('Water','Shoes')
+
+--group by 
+Select customer_id,count(*) 
+from addresses
+group by customer_id
+
+--having
+Select title,count(*) 
+from addresses
+group by title
+having title='Home'
+
+--inner join,group by  city ismi ankara olan customer no.ları getirdik
+Select a.city_id,ci.name,cu.customer_no
+from cities ci INNER JOIN addresses a on ci.id = a.city_id
+INNER JOIN customers cu ON cu.id = a.customer_id
+group by a.city_id,ci.name,cu.customer_no
+having ci.name='Ankara'
+
+--product isim uzunluğu
+Select id,length(name) as "ürünlerin isim uzunluğu"
+from products
+
+--outer join
+SELECT * from product_categories pc
+full outer join products p 
+on pc.product_id= p.id
+
+
+
+
+
+--Select Count(a.*),ci.name,cu.customer_no
+--from cities ci INNER JOIN addresses a on ci.id = a.city_id
+--INNER JOIN customers cu ON cu.id = a.customer_id
+--group by a.city_id,ci.name,cu.customer_no
+--having Count(a.*)>1
+
+SELECT * from cities
+SELECT * from categories
+SELECT * from products
+SELECT * FROM addresses
+Select * from customers
